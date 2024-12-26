@@ -1,0 +1,43 @@
+{
+	"folders": [
+		{
+			"name": "psw",
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"i2c.h": "c",
+			"spi_master.h": "c",
+			"esp_lcd_panel_io.h": "c",
+			"gpio.h": "c",
+			"lv_conf.h": "c",
+			"lvgl.h": "c",
+			"esp_lvgl_port.h": "c",
+			"esp_lvgl_port_disp.h": "c",
+			"esp_lcd_panel_vendor.h": "c",
+			"cstdlib": "cpp",
+			"esp_lcd_touch.h": "c",
+			"esp_err.h": "c",
+			"sdkconfig.h": "c",
+			"esp_lcd_touch_cst816s.h": "c",
+			"display.h": "c",
+			"freertos.h": "c",
+			"spi_types.h": "c",
+			"esp_bit_defs.h": "c",
+			"esp-box-3.h": "c",
+			"i2c_master.h": "c",
+			"esp-box-s3-waveshare169.h": "c",
+			"esp-bsp.h": "c",
+			"ledc.h": "c",
+			"esp_intr_alloc.h": "c",
+			"compare": "c",
+			"cstdint": "c",
+			"lv_demo_widgets.h": "c",
+			"touch.h": "c",
+			"bsp_err_check.h": "c",
+			"esp_lcd_types.h": "c",
+			"esp_lcd_panel_ops.h": "c"
+		}
+	}
+}
