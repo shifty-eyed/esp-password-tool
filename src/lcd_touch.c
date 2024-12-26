@@ -4,6 +4,7 @@
 #include "driver/i2c.h"
 #include "driver/gpio.h"
 #include "driver/spi_master.h"
+#include "driver/ledc.h"
 #include "esp_lcd_panel_io.h"
 #include "esp_lcd_panel_vendor.h"
 #include "esp_lcd_panel_ops.h"
@@ -150,6 +151,31 @@ static esp_err_t app_lvgl_init(void) {
     return ESP_OK;
 }
 
+static esp_err_t bsp_display_brightness_init(void) {
+    // Setup LEDC peripheral for PWM backlight control
+    const ledc_channel_config_t LCD_backlight_channel = {
+        .gpio_num = EXAMPLE_LCD_GPIO_BL,
+        .speed_mode = LEDC_LOW_SPEED_MODE,
+        .channel = LCD_LEDC_CH,
+        .intr_type = LEDC_INTR_DISABLE,
+        .timer_sel = 1,
+        .duty = 0,
+        .hpoint = 0
+    };
+    const ledc_timer_config_t LCD_backlight_timer = {
+        .speed_mode = LEDC_LOW_SPEED_MODE,
+        .duty_resolution = LEDC_TIMER_10_BIT,
+        .timer_num = 1,
+        .freq_hz = 5000,
+        .clk_cfg = LEDC_AUTO_CLK
+    };
+
+    ESP_RETURN_ON_ERROR(ledc_timer_config(&LCD_backlight_timer), TAG, "LEDC timer config failed");
+    ESP_RETURN_ON_ERROR(ledc_channel_config(&LCD_backlight_channel), TAG, "LEDC channel config failed");
+
+    return ESP_OK;
+}
+
 void init_lcd_and_touch(void) {
  /* LCD HW initialization */
     ESP_ERROR_CHECK(app_lcd_init());
@@ -202,4 +228,23 @@ void init_lcd_and_touch(void) {
     lv_indev_set_user_data(indev_touch, tp);
     lv_indev_set_type(indev_touch, LV_INDEV_TYPE_POINTER);
     lv_indev_set_display(indev_touch, lvgl_disp);
+
+    bsp_display_brightness_init();
+}
+
+
+esp_err_t set_lcd_brightness(int brightness_percent) {
+    if (brightness_percent > 100) {
+        brightness_percent = 100;
+    }
+    if (brightness_percent < 0) {
+        brightness_percent = 0;
+    }
+
+    ESP_LOGI(TAG, "Setting LCD backlight: %d%%", brightness_percent);
+    uint32_t duty_cycle = (1023 * brightness_percent) / 100; // LEDC resolution set to 10bits, thus: 100% = 1023
+    ESP_RETURN_ON_ERROR(ledc_set_duty(LEDC_LOW_SPEED_MODE, LCD_LEDC_CH, duty_cycle), TAG, "LEDC set duty failed");
+    ESP_RETURN_ON_ERROR(ledc_update_duty(LEDC_LOW_SPEED_MODE, LCD_LEDC_CH), TAG, "LEDC update duty failed");
+
+    return ESP_OK;
 }

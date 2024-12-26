@@ -2,9 +2,7 @@
 #include "lv_conf.h"
 #include "lcd_touch.h"
 
-static const char *TAG = "PSWMAIN";
-
-static lv_obj_t *avatar;
+static const char *TAG = "MAIN";
 
 void app_button_cb(lv_event_t *e) {
     lv_event_code_t code = lv_event_get_code(e); // Get the event code
@@ -40,7 +38,7 @@ lv_obj_t * label;
 
 void app_main(void) {
     init_lcd_and_touch();
-
+    set_lcd_brightness(50);
     
     lvgl_port_lock(-1);
 

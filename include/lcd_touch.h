@@ -4,6 +4,7 @@
 #include "esp_lvgl_port.h"
 
 void init_lcd_and_touch(void);
+esp_err_t set_lcd_brightness(int brightness_percent);
 
 
 /* LCD size */
@@ -35,5 +36,7 @@ void init_lcd_and_touch(void);
 #define EXAMPLE_PIN_NUM_TOUCH_SDA (GPIO_NUM_11)
 #define EXAMPLE_PIN_NUM_TOUCH_RST (GPIO_NUM_13)
 #define EXAMPLE_PIN_NUM_TOUCH_INT (GPIO_NUM_14)
+
+#define LCD_LEDC_CH (1)
 
 #endif  // LCD_TOUCH_H
