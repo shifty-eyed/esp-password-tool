@@ -37,7 +37,15 @@
 			"touch.h": "c",
 			"bsp_err_check.h": "c",
 			"esp_lcd_types.h": "c",
-			"esp_lcd_panel_ops.h": "c"
+			"esp_lcd_panel_ops.h": "c",
+			"map": "cpp",
+			"stdlib.h": "c",
+			"string.h": "c",
+			"lcd_touch.h": "c",
+			"*.tcc": "c",
+			"cstdio": "c",
+			"stdio.h": "c",
+			"password_registry.h": "c"
 		}
 	}
 }
