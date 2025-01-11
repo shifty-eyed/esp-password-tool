@@ -11,7 +11,7 @@ static void load() {
     devices = (device_entry *)malloc(count * sizeof(device_entry));
 
     for (int i = 0; i < count; i++) {
-        sprintf(devices[i].name, "name %d", i);
+        sprintf(devices[i].name, "Device%d", i);
         sprintf(devices[i].mac, "mac %d", i);
     }
 }
